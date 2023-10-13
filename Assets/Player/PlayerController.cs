@@ -5,11 +5,18 @@ using UnityEngine;
 public class PlayerConteroller : MonoBehaviour
 {
     public LineRenderer lineRenderer;
+
+    public GameObject bullet;
     public float thrust = 1f;
     public float revSpeed = 1f;
     public float maxLaserDist = 10;
     private Rigidbody2D rb;
     private float Laserdist;
+
+    private float zoomAcsr = 0;
+    private float timeToFire;
+
+    public Camera cam;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,30 +25,10 @@ public class PlayerConteroller : MonoBehaviour
         lineRenderer.positionCount = 2;
     }
 
-    void Mine() 
+    void Shoot() 
     {
-        if (Input.GetMouseButton(0)) // Проверяем нажатие на левую кнопку мыши
-        {
-            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 20));
-            
-            Vector2 direction = mousePosition - transform.position;
-
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, maxLaserDist);
-            
-            if(hit) {
-                lineRenderer.SetPosition(1,hit.point);
-                Debug.Log("Hit");
-            } else {
-                //if(maxLaserDist < Mathf.Abs(mousePosition.y - transform.position.y) || maxLaserDist < Mathf.Abs(mousePosition.x - transform.position.x)) Laserdist = maxLaserDist;
-                lineRenderer.SetPosition(1,mousePosition);
-                }
-
-            lineRenderer.SetPosition(0,transform.position);
-            
-        } else {
-            lineRenderer.SetPosition(1,transform.position);
-            lineRenderer.SetPosition(0,transform.position);
-        }
+        var bulInst = Instantiate(bullet, transform.position, transform.rotation);
+        bulInst.GetComponent<Rigidbody2D>().AddForce(transform.up  * 5000  * Time.deltaTime);
     }
 
     
@@ -51,12 +38,26 @@ public class PlayerConteroller : MonoBehaviour
     void FixedUpdate()
     {
         if (Input.GetAxis("Vertical") != 0) {
-            rb.AddForce(transform.up * Input.GetAxis("Vertical") * thrust);
+            rb.AddForce(transform.up * Input.GetAxis("Vertical") * (thrust + rb.totalForce.magnitude));
+            
         } 
         if (Input.GetAxis("Horizontal") != 0) {
+            rb.freezeRotation = false;
             rb.MoveRotation(rb.rotation - revSpeed * Input.GetAxis("Horizontal"));
+        } else {
+            rb.freezeRotation = true;
         }
-
-        Mine();
+        
+        
+        
+        if(Input.GetMouseButton(0) && Time.time > timeToFire + 1) {
+                timeToFire = Time.time;
+                Shoot();
+            }
+    }
+    void Update(){
+        //if (zoomAcsr !=0) zoomAcsr -= 0.1f;
+        //if (Input.mouseScrollDelta.y !=0 && zoomAcsr < 2) zoomAcsr += Input.mouseScrollDelta.y;
+        cam.fieldOfView += Input.mouseScrollDelta.y + zoomAcsr;
     }
 }

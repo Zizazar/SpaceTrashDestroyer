@@ -4917,7 +4917,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 5
   m_Sprite: {fileID: 2001538622, guid: 6eea7399305062988969c6a47bb5fbbf, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -5000,8 +5000,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 20
-  field of view: 60
+  far clip plane: 21.23
+  field of view: 59
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -5131,9 +5131,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 0}
+  bullet: {fileID: 2103746371215980455, guid: b777d46d59385f1c7bde8c3e2b332022, type: 3}
   thrust: 12
   revSpeed: 2
   maxLaserDist: 10
+  cam: {fileID: 8137873916544465831}
 --- !u!120 &5586688092004237039
 LineRenderer:
   serializedVersion: 2

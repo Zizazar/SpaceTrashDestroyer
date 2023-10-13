@@ -11,13 +11,14 @@ public class Asteroid : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        for (int i=0; i < 10; i++) 
+        for (int i=0; i < 1000; i++) 
          {
-              var pos = new Vector3(Random.Range(-150, 150), Random.Range(-150, 150), Random.Range(-150, 150));
+              var pos = new Vector3(Random.Range(-500, 500), Random.Range(-500, 500), 0);
+              var rot = Quaternion.Euler(0, 0, Random.Range(0, 360));
               var chosenAsteroid = AsteroidPrefabs[Random.Range(0, AsteroidPrefabs.Length)];
-              var asteroid = Instantiate(chosenAsteroid , pos, Quaternion.identity);
+              var asteroid = Instantiate(chosenAsteroid , pos, rot);
 
-              // You can still manipulate asteroid afterwards like .AddComponent etc
+              //asteroid.size = Random.Range(2.0f, 10.0f);
          }
     }
 
