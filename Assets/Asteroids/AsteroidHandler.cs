@@ -10,11 +10,14 @@ public class AsteroidHandler : MonoBehaviour
     [SerializeField] public float durability;
 
     [SerializeField] private GameObject drop;
+    private Rigidbody2D rb;
 
     // Start is called before the first frame update
     void Start()
     {
+        rb = GetComponent<Rigidbody2D>();
         size = Random.Range(3.0f, 15.0f);
+        rb.mass = size * 50;
         transform.localScale = new Vector3(size, size, 1);
     }
 
