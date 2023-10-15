@@ -9,7 +9,8 @@ public class Bullet : MonoBehaviour
         if (collision.collider.tag == "Asteroid")
         {
             collision.rigidbody.AddForceAtPosition(transform.up, transform.position);
-            Debug.Log(collision.transform.position);
+            
+            collision.gameObject.SendMessage("ApplyDamage", Random.Range(0.2f, 5));
             Destroy(gameObject);
         }
     }
