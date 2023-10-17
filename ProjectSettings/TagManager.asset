@@ -5,11 +5,12 @@ TagManager:
   serializedVersion: 2
   tags:
   - Asteroid
+  - Shard
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Shard
   - Water
   - UI
   - 
